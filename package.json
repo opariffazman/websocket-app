@@ -11,12 +11,15 @@
     "server": "MODE=server node app.js",
     "client": "MODE=client node app.js"
   },
-  "keywords": ["docker", "websocket", "teaching"],
-  "author": "Ariff",
+  "keywords": [
+    "docker",
+    "websocket",
+    "teaching"
+  ],
+  "author": "opariffazman",
   "license": "MIT",
   "dependencies": {
     "express": "^4.18.2",
-    "ws": "^8.14.2",
-    "bcrypt": "^5.1.1"
+    "ws": "^8.14.2"
   }
 }

@@ -15,47 +15,10 @@ if (majorVersion < REQUIRED_VERSION) {
     console.error(`   Current version: v${nodeVersion} (detected)`);
     console.error(`   Required version: v${REQUIRED_VERSION}.x or higher`);
     console.error('');
-    console.error('   Why version 25+?');
-    console.error('   - This app uses latest Node.js features (v25.2.1)');
-    console.error('   - Default "apt-get install nodejs" gives LTS (v18-v20)');
-    console.error('   - Installing specific versions is complex and error-prone');
-    console.error('');
-    console.error('   Manual fix (complex):');
-    console.error('   - Download and compile Node.js 25 from source');
-    console.error('   - Or use nvm to install: nvm install 25');
-    console.error('');
-    console.error('   Docker fix (simple):');
-    console.error('   - docker build -t docker-connect .');
-    console.error('   - docker run -d -e MODE=server/client docker-connect');
-    console.error('');
     process.exit(1);
 }
 
 console.log(`✅ Node.js version check passed (v${nodeVersion})`);
-console.log('');
-
-// Check for bcrypt - requires system build tools
-try {
-    const bcrypt = require('bcrypt');
-    // Test bcrypt is working (will fail if not properly compiled)
-    bcrypt.hashSync('test', 10);
-    console.log('✅ bcrypt validation passed');
-} catch (error) {
-    console.error('❌ ERROR: bcrypt failed to load or execute!');
-    console.error('   This typically means you are missing system build tools:');
-    console.error('   - python3');
-    console.error('   - make');
-    console.error('   - g++ (build-essential on Ubuntu)');
-    console.error('');
-    console.error('   On Ubuntu/Debian: sudo apt-get install python3 make g++');
-    console.error('   On Amazon Linux: sudo yum install python3 make gcc-c++');
-    console.error('');
-    console.error('   OR use Docker to avoid these dependency issues!');
-    console.error('   Error details:', error.message);
-    process.exit(1);
-}
-
-console.log('✅ All system dependencies validated');
 console.log('');
 
 // ============================================================================
