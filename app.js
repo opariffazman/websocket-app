@@ -217,7 +217,7 @@ async function runClient() {
         console.log('');
 
         if (!SERVER_URL) {
-            const serverIp = await promptUser('🌐 Enter server IP address (e.g., 192.168.1.100:8080): ');
+            const serverIp = await promptUser('🌐 IP Server: ');
             if (serverIp) {
                 // Add ws:// protocol if not already present
                 SERVER_URL = serverIp.startsWith('ws://') || serverIp.startsWith('wss://')
@@ -229,14 +229,14 @@ async function runClient() {
         }
 
         if (!CLIENT_NAME) {
-            CLIENT_NAME = await promptUser('📝 Enter your name: ');
+            CLIENT_NAME = await promptUser('📝 Nama Anda: ');
             if (!CLIENT_NAME) {
                 CLIENT_NAME = 'Anonymous';
             }
         }
 
         if (!CLIENT_LOCATION) {
-            CLIENT_LOCATION = await promptUser('📍 Enter your location (leave empty to use IP): ');
+            CLIENT_LOCATION = await promptUser('📍 Lokasi Anda: ');
             if (!CLIENT_LOCATION) {
                 CLIENT_LOCATION = '';
             }
