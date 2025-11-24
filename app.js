@@ -69,7 +69,7 @@ function runServer() {
                     const clientInfo = {
                         id: clientId,
                         name: data.name || 'Anonymous',
-                        location: data.location || 'Unknown',
+                        location: data.location || clientIp,
                         connectedAt: Date.now(),
                         lastSeen: Date.now(),
                         ws: ws
@@ -179,15 +179,62 @@ function runServer() {
 // ============================================================================
 // CLIENT MODE
 // ============================================================================
-function runClient() {
+async function runClient() {
     const WebSocket = require('ws');
     const os = require('os');
+    const readline = require('readline');
+
+    // Function to prompt user for input (only works in interactive terminals)
+    function promptUser(question) {
+        const rl = readline.createInterface({
+            input: process.stdin,
+            output: process.stdout
+        });
+
+        return new Promise((resolve) => {
+            rl.question(question, (answer) => {
+                rl.close();
+                resolve(answer.trim() || null);
+            });
+        });
+    }
 
     // Configuration from environment variables
     const SERVER_URL = process.env.SERVER_URL || 'ws://localhost:8080';
-    const CLIENT_NAME = process.env.CLIENT_NAME || process.env.NAME || 'Anonymous';
-    const CLIENT_LOCATION = process.env.CLIENT_LOCATION || process.env.LOCATION || 'Unknown';
     const HEARTBEAT_INTERVAL = parseInt(process.env.HEARTBEAT_INTERVAL || '5000');
+
+    // Get name and location - only check explicit CLIENT_NAME/CLIENT_LOCATION for now
+    let CLIENT_NAME = process.env.CLIENT_NAME;
+    let CLIENT_LOCATION = process.env.CLIENT_LOCATION;
+
+    // Check if running in interactive terminal (works with 'node app.js' or 'docker run -it')
+    if (process.stdin.isTTY && (!CLIENT_NAME || !CLIENT_LOCATION)) {
+        console.log('\x1b[36m%s\x1b[0m', '╔════════════════════════════════════════════════════════╗');
+        console.log('\x1b[36m%s\x1b[0m', '║                                                        ║');
+        console.log('\x1b[36m%s\x1b[0m', '║              🐳  DOCKER CONNECT CLIENT  🐳             ║');
+        console.log('\x1b[36m%s\x1b[0m', '║                                                        ║');
+        console.log('\x1b[36m%s\x1b[0m', '╚════════════════════════════════════════════════════════╝');
+        console.log('');
+
+        if (!CLIENT_NAME) {
+            CLIENT_NAME = await promptUser('📝 Enter your name: ');
+            if (!CLIENT_NAME) {
+                CLIENT_NAME = 'Anonymous';
+            }
+        }
+
+        if (!CLIENT_LOCATION) {
+            CLIENT_LOCATION = await promptUser('📍 Enter your location (leave empty to use IP): ');
+            if (!CLIENT_LOCATION) {
+                CLIENT_LOCATION = '';
+            }
+        }
+        console.log('');
+    }
+
+    // Fall back to other env vars or defaults if still not set
+    CLIENT_NAME = CLIENT_NAME || process.env.NAME || 'Anonymous';
+    CLIENT_LOCATION = CLIENT_LOCATION || process.env.LOCATION || '';
 
     let clientId = null;
     let ws = null;
