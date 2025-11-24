@@ -1,5 +1,5 @@
 // ============================================================================
-// DOCKER CONNECT - Combined Server & Client Application
+//  WEBSOCKET APP - Combined Server & Client Application
 // ============================================================================
 // Startup validation - demonstrates dependency issues
 console.log('🔍 Validating system dependencies...');
@@ -170,9 +170,30 @@ function runServer() {
     }, 10000); // Check every 10 seconds
 
     const PORT = process.env.PORT || 8080;
+
+    // Display banner
+    function displayBanner() {
+        const os = require('os');
+        console.clear();
+        console.log('\x1b[35m%s\x1b[0m', '╔════════════════════════════════════════════════════════╗');
+        console.log('\x1b[35m%s\x1b[0m', '║                                                        ║');
+        console.log('\x1b[35m%s\x1b[0m', '║              🐳   WEBSOCKET APP SERVER  🐳             ║');
+        console.log('\x1b[35m%s\x1b[0m', '║                                                        ║');
+        console.log('\x1b[35m%s\x1b[0m', '╚════════════════════════════════════════════════════════╝');
+        console.log('');
+        console.log('\x1b[33m%s\x1b[0m', `🌐 Port:     ${PORT}`);
+        console.log('\x1b[33m%s\x1b[0m', `🖥️  Hostname: ${os.hostname()}`);
+        console.log('\x1b[33m%s\x1b[0m', `📊 Dashboard: http://localhost:${PORT}`);
+        console.log('\x1b[33m%s\x1b[0m', `🔌 WebSocket: ws://localhost:${PORT}`);
+        console.log('');
+        console.log('\x1b[90m%s\x1b[0m', '════════════════════════════════════════════════════════');
+        console.log('');
+        console.log('\x1b[32m%s\x1b[0m', '✅ Server is running and ready to accept connections');
+        console.log('');
+    }
+
     server.listen(PORT, '0.0.0.0', () => {
-        console.log(`🐳 Docker Connect Server running on port ${PORT}`);
-        console.log(`Dashboard: http://localhost:${PORT}`);
+        displayBanner();
     });
 }
 
@@ -211,7 +232,7 @@ async function runClient() {
     if (process.stdin.isTTY && (!SERVER_URL || !CLIENT_NAME || !CLIENT_LOCATION)) {
         console.log('\x1b[36m%s\x1b[0m', '╔════════════════════════════════════════════════════════╗');
         console.log('\x1b[36m%s\x1b[0m', '║                                                        ║');
-        console.log('\x1b[36m%s\x1b[0m', '║              🐳  DOCKER CONNECT CLIENT  🐳             ║');
+        console.log('\x1b[36m%s\x1b[0m', '║              🐳   WEBSOCKET APP CLIENT  🐳             ║');
         console.log('\x1b[36m%s\x1b[0m', '║                                                        ║');
         console.log('\x1b[36m%s\x1b[0m', '╚════════════════════════════════════════════════════════╝');
         console.log('');
@@ -260,7 +281,7 @@ async function runClient() {
         console.clear();
         console.log('\x1b[36m%s\x1b[0m', '╔════════════════════════════════════════════════════════╗');
         console.log('\x1b[36m%s\x1b[0m', '║                                                        ║');
-        console.log('\x1b[36m%s\x1b[0m', '║              🐳  DOCKER CONNECT CLIENT  🐳             ║');
+        console.log('\x1b[36m%s\x1b[0m', '║              🐳   WEBSOCKET APP CLIENT  🐳             ║');
         console.log('\x1b[36m%s\x1b[0m', '║                                                        ║');
         console.log('\x1b[36m%s\x1b[0m', '╚════════════════════════════════════════════════════════╝');
         console.log('');
