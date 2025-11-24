@@ -1,0 +1,22 @@
+{
+  "name": "docker-connect",
+  "version": "1.0.0",
+  "description": "Docker Connect - Teaching tool for Docker networking",
+  "main": "app.js",
+  "engines": {
+    "node": ">=25.0.0"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "server": "MODE=server node app.js",
+    "client": "MODE=client node app.js"
+  },
+  "keywords": ["docker", "websocket", "teaching"],
+  "author": "Ariff",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "ws": "^8.14.2",
+    "bcrypt": "^5.1.1"
+  }
+}
