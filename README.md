@@ -2,6 +2,12 @@
 
 A WebSocket-based demo app with Dockerfile & simple CI/CD that push to GitHub Container Registry (ghcr.io).
 
+## Screenshots
+
+| Server | Client | UI |
+| ------- | ------- | --------- |
+| <img src="assets/server.png" width="300px" /> | <img src="assets/client.png" width="300px" />| <img src="assets/ui.png" width="300px" />|
+
 ## Setup with NPM
 
 ### Prerequisites
@@ -66,4 +72,3 @@ docker run -d \
 | `SERVER_URL` | `ws://localhost:8080` | WebSocket server URL | Client |
 | `CLIENT_NAME` | `Anonymous` | Client display name | Client |
 | `CLIENT_LOCATION` | `Unknown` | Client location | Client |
-
