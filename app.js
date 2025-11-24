@@ -200,21 +200,33 @@ async function runClient() {
     }
 
     // Configuration from environment variables
-    const SERVER_URL = process.env.SERVER_URL || 'ws://localhost:8080';
     const HEARTBEAT_INTERVAL = parseInt(process.env.HEARTBEAT_INTERVAL || '5000');
 
-    // Get name and location - only check explicit CLIENT_NAME/CLIENT_LOCATION for now
+    // Get server URL, name and location - only check explicit env vars for now
+    let SERVER_URL = process.env.SERVER_URL;
     let CLIENT_NAME = process.env.CLIENT_NAME;
     let CLIENT_LOCATION = process.env.CLIENT_LOCATION;
 
     // Check if running in interactive terminal (works with 'node app.js' or 'docker run -it')
-    if (process.stdin.isTTY && (!CLIENT_NAME || !CLIENT_LOCATION)) {
+    if (process.stdin.isTTY && (!SERVER_URL || !CLIENT_NAME || !CLIENT_LOCATION)) {
         console.log('\x1b[36m%s\x1b[0m', '╔════════════════════════════════════════════════════════╗');
         console.log('\x1b[36m%s\x1b[0m', '║                                                        ║');
         console.log('\x1b[36m%s\x1b[0m', '║              🐳  DOCKER CONNECT CLIENT  🐳             ║');
         console.log('\x1b[36m%s\x1b[0m', '║                                                        ║');
         console.log('\x1b[36m%s\x1b[0m', '╚════════════════════════════════════════════════════════╝');
         console.log('');
+
+        if (!SERVER_URL) {
+            const serverIp = await promptUser('🌐 Enter server IP address (e.g., 192.168.1.100:8080): ');
+            if (serverIp) {
+                // Add ws:// protocol if not already present
+                SERVER_URL = serverIp.startsWith('ws://') || serverIp.startsWith('wss://')
+                    ? serverIp
+                    : `ws://${serverIp}`;
+            } else {
+                SERVER_URL = 'ws://localhost:8080';
+            }
+        }
 
         if (!CLIENT_NAME) {
             CLIENT_NAME = await promptUser('📝 Enter your name: ');
@@ -232,7 +244,8 @@ async function runClient() {
         console.log('');
     }
 
-    // Fall back to other env vars or defaults if still not set
+    // Fall back to defaults if still not set
+    SERVER_URL = SERVER_URL || 'ws://localhost:8080';
     CLIENT_NAME = CLIENT_NAME || process.env.NAME || 'Anonymous';
     CLIENT_LOCATION = CLIENT_LOCATION || process.env.LOCATION || '';
 
