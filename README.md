@@ -5,7 +5,7 @@ A WebSocket-based demo app with Dockerfile & simple CI/CD that push to GitHub Co
 ## Setup with NPM
 
 ### Prerequisites
-- **Node.js 25+ installed** (not LTS! - v25.2.1 or higher)
+- **Node.js 25+ installed**
 
 ### Install Dependencies
 ```bash
