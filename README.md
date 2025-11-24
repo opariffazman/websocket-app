@@ -1,8 +1,8 @@
-# Docker Connect
+# Websocket App
 
-A WebSocket-based demo app for teaching Docker. Single image can run as either server or client.
+A WebSocket-based demo app with Dockerfile & simple CI/CD that push to GitHub Container Registry (ghcr.io).
 
-## Local Setup (Without Docker)
+## Setup with NPM
 
 ### Prerequisites
 - **Node.js 25+ installed** (not LTS! - v25.2.1 or higher)
@@ -28,11 +28,11 @@ export CLIENT_LOCATION="Your City"
 npm run client
 ```
 
-## Docker Setup
+## Setup with Docker
 
 ### Build Image
 ```bash
-docker build -t docker-connect .
+docker build -t websocket-app .
 ```
 
 ### Run as Server
@@ -40,8 +40,8 @@ docker build -t docker-connect .
 docker run -d \
   -p 8080:8080 \
   -e MODE=server \
-  --name docker-server \
-  docker-connect
+  --name ws-server \
+  websocket-app
 ```
 
 Access dashboard at `http://localhost:8080`
@@ -53,8 +53,8 @@ docker run -d \
   -e SERVER_URL=ws://YOUR_SERVER_IP:8080 \
   -e CLIENT_NAME="Your Name" \
   -e CLIENT_LOCATION="Your City" \
-  --name docker-client \
-  docker-connect
+  --name ws-client \
+  websocket-app
 ```
 
 ### Environment Variables

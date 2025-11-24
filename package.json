@@ -1,7 +1,7 @@
 {
-  "name": "docker-connect",
+  "name": "websocket-app",
   "version": "1.0.0",
-  "description": "Docker Connect - Teaching tool for Docker networking",
+  "description": "Websocket App",
   "main": "app.js",
   "engines": {
     "node": ">=25.0.0"
