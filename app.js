@@ -447,7 +447,10 @@ async function runClient() {
 // ============================================================================
 // START APPLICATION BASED ON MODE
 // ============================================================================
+console.log('🔍 Debug: process.env.MODE =', process.env.MODE);
 const MODE = (process.env.MODE || 'server').toLowerCase();
+console.log('🔍 Debug: Resolved MODE =', MODE);
+console.log('');
 
 if (MODE === 'server') {
     console.log('🚀 Starting in SERVER mode...');
